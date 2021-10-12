@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titleInputController = TextEditingController();
-  final amountInputController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addTransactionFunction;
 
   NewTransaction({this.addTransactionFunction});
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleInputController = TextEditingController();
+
+  final amountInputController = TextEditingController();
+
+  void submitData() {
+    final enteredTitle = titleInputController.text;
+    final enteredAmount = double.parse(amountInputController.text);
+
+    if (enteredAmount <= 0 || enteredTitle.isEmpty) {
+      return;
+    }
+
+    widget.addTransactionFunction(
+      enteredTitle,
+      enteredAmount,
+    );
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,22 +43,22 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: "Title"),
               controller: titleInputController,
-              // onChanged: (e) => {titleInput = e},
+              keyboardType: TextInputType.name,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
               controller: amountInputController,
-              // onChanged: (e) => {amountInput = e},
+              keyboardType: TextInputType
+                  .number, //For IOS keyboard type use  =>   TextInputType.numberWithOptions(decimal: true)
+              onSubmitted: (_) => submitData(),
             ),
             TextButton(
-              onPressed: () => {
-                addTransactionFunction(
-                  titleInputController.text,
-                  double.parse(amountInputController.text),
-                )
-              },
+              onPressed: submitData,
               child: Text("Add Transaction"),
-              style: TextButton.styleFrom(primary: Colors.purple),
+              style: TextButton.styleFrom(
+                primary: Colors.purple,
+              ),
             ),
           ],
         ),

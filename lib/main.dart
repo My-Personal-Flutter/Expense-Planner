@@ -13,7 +13,11 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(),
       theme: ThemeData(
         primarySwatch: Colors.pink,
-        accentColor: Colors.black,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.pink,
+        ).copyWith(
+          secondary: Colors.black,
+        ),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
@@ -41,24 +45,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: "t1",
-      title: "New Shoes",
-      amount: 30.12,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Glasses",
-      amount: 10.12,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Shirts",
-      amount: 12.12,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: "t1",
+    //   title: "New Shoes",
+    //   amount: 30.12,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t2",
+    //   title: "Glasses",
+    //   amount: 10.12,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t2",
+    //   title: "Shirts",
+    //   amount: 12.12,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -76,12 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _startAddNewTransactionModel(BuildContext buildContext) {
     showModalBottomSheet(
-        context: buildContext,
-        builder: (_) {
-          return NewTransaction(
-            addTransactionFunction: _addNewTransaction,
-          );
-        });
+      context: buildContext,
+      builder: (_) {
+        return NewTransaction(
+          addTransactionFunction: _addNewTransaction,
+        );
+      },
+    );
   }
 
   @override

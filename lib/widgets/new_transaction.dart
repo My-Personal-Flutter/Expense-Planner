@@ -33,10 +33,9 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
       elevation: 3,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -53,6 +52,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   .number, //For IOS keyboard type use  =>   TextInputType.numberWithOptions(decimal: true)
               onSubmitted: (_) => submitData(),
             ),
+            SizedBox(height: 20),
             TextButton(
               onPressed: submitData,
               child: Text("Add Transaction"),

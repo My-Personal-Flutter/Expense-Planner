@@ -1,4 +1,5 @@
 import 'package:expense_planner/models/transaction.dart';
+import 'package:expense_planner/widgets/chart.dart';
 import 'package:expense_planner/widgets/new_transaction.dart';
 import 'package:expense_planner/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +90,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(
+            days: 7,
+          ),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,19 +120,8 @@ class _MyHomePageState extends State<MyHomePage> {
             // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Card(
-                shadowColor: Theme.of(context).shadowColor,
-                color: Theme.of(context).primaryColor,
-                elevation: 4,
-                margin:
-                    EdgeInsets.only(top: 10, bottom: 20, left: 10, right: 10),
-                child: Container(
-                  width: double.infinity,
-                  child: Text(
-                    "Chart",
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ),
+              Chart(
+                recentTransactions: _recentTransactions,
               ),
               TransactionList(
                 transactions: _userTransactions,

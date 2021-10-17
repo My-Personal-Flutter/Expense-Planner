@@ -15,7 +15,7 @@ class TransactionList extends StatelessWidget {
           ? Column(
               children: [
                 Text(
-                  "No Transaction Added Yet!",
+                  "No Transactions Added Yet!",
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 20),
@@ -32,7 +32,7 @@ class TransactionList extends StatelessWidget {
               itemCount: transactions.length,
               itemBuilder: (context, index) {
                 return Card(
-                  margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
                   elevation: 1,
                   child: Row(
                     children: [
@@ -44,7 +44,7 @@ class TransactionList extends StatelessWidget {
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Theme.of(context).primaryColor,
-                            width: 1,
+                            width: 1.5,
                           ),
                         ),
                         padding: EdgeInsets.all(4),

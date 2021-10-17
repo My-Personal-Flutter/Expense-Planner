@@ -32,51 +32,87 @@ class TransactionList extends StatelessWidget {
               itemCount: transactions.length,
               itemBuilder: (context, index) {
                 return Card(
-                  margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                  elevation: 1,
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            width: 1.5,
-                          ),
-                        ),
-                        padding: EdgeInsets.all(4),
-                        child: Text(
-                          "\$${transactions[index].amount.toStringAsFixed(2)}",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                  elevation: 3,
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: FittedBox(
+                          child: Text(
+                            "\$${transactions[index].amount.toStringAsFixed(2)}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            transactions[index].title,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          Text(
-                            DateFormat.yMMMd().format(transactions[index].date),
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(transactions[index].date),
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
                 );
-              },
-            ),
+              }),
     );
   }
 }
+
+
+// Card(
+//                   margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
+//                   elevation: 1,
+//                   child: Row(
+//                     children: [
+//                       Container(
+//                         margin: EdgeInsets.symmetric(
+//                           vertical: 10,
+//                           horizontal: 10,
+//                         ),
+//                         decoration: BoxDecoration(
+//                           border: Border.all(
+//                             color: Theme.of(context).primaryColor,
+//                             width: 1.5,
+//                           ),
+//                         ),
+//                         padding: EdgeInsets.all(4),
+//                         child: Text(
+//                           "\$${transactions[index].amount.toStringAsFixed(2)}",
+//                           style: TextStyle(
+//                             color: Theme.of(context).primaryColor,
+//                             fontWeight: FontWeight.bold,
+//                             fontSize: 16,
+//                           ),
+//                         ),
+//                       ),
+//                       Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(
+//                             transactions[index].title,
+//                             style: Theme.of(context).textTheme.headline6,
+//                           ),
+//                           Text(
+//                             DateFormat.yMMMd().format(transactions[index].date),
+//                             style: TextStyle(
+//                               color: Colors.grey,
+//                             ),
+//                           )
+//                         ],
+//                       )
+//                     ],
+//                   ),
+//                 );
+//               },

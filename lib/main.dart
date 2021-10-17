@@ -14,10 +14,12 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(),
       theme: ThemeData(
         primarySwatch: Colors.pink,
+        errorColor: Colors.red[700],
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.pink,
         ).copyWith(
           secondary: Colors.black,
+          onSecondary: Colors.white,
         ),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'OpenSans',
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+              ),
+              subtitle2: TextStyle(
+                color: Colors.grey,
               ),
             ),
         appBarTheme: AppBarTheme(
@@ -66,12 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime selectedDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: selectedDate,
     );
 
     setState(() {
@@ -79,8 +84,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == id);
+    });
+  }
+
   void _startAddNewTransactionModel(BuildContext buildContext) {
     showModalBottomSheet(
+      enableDrag: true,
       context: buildContext,
       builder: (_) {
         return NewTransaction(
@@ -125,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               TransactionList(
                 transactions: _userTransactions,
+                deleteTx: _deleteTransaction,
               )
             ],
           ),

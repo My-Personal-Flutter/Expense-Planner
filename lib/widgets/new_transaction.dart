@@ -1,5 +1,9 @@
+import 'package:expense_planner/custom/adaptive_button.dart';
+import 'package:expense_planner/custom/adaptive_text_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
 
 class NewTransaction extends StatefulWidget {
   final Function addTransactionFunction;
@@ -56,66 +60,102 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Card(
-        elevation: 3,
-        child: Container(
-          padding: EdgeInsets.only(
-            left: 16,
-            right: 16,
-            top: 16,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              TextField(
-                decoration: InputDecoration(labelText: "Title"),
-                controller: _titleInputController,
-                keyboardType: TextInputType.name,
-                onSubmitted: (_) => _submitData(),
-              ),
-              TextField(
-                decoration: InputDecoration(labelText: "Amount"),
-                controller: _amountInputController,
-                keyboardType: TextInputType
-                    .number, //For IOS keyboard type use  =>   TextInputType.numberWithOptions(decimal: true)
-                onSubmitted: (_) => _submitData(),
-              ),
-              Container(
-                height: 100,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        _selectedDate == null
-                            ? "No Date Choosen"
-                            : "Picked Date : ${DateFormat.yMd().format(_selectedDate)}",
+    // final mediaQuery = MediaQuery.of(context);
+    // final _islandscape = mediaQuery.orientation == Orientation.landscape;
+
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Card(
+          elevation: 3,
+          child: Container(
+            padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 16,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Platform.isIOS
+                    ? CupertinoTextField(
+                        placeholder: "Title",
+                        controller: _titleInputController,
+                        keyboardType: TextInputType.name,
+                        onSubmitted: (_) => _submitData(),
+                      )
+                    : TextField(
+                        decoration: InputDecoration(labelText: "Title"),
+                        controller: _titleInputController,
+                        keyboardType: TextInputType.name,
+                        onSubmitted: (_) => _submitData(),
                       ),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          primary: Theme.of(context).primaryColor),
-                      onPressed: _presentDatePicker,
-                      child: Text(
-                        "  Choose Date",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                Platform.isIOS
+                    ? SizedBox(
+                        height: 20,
+                      )
+                    : Container(),
+                Platform.isIOS
+                    ? CupertinoTextField(
+                        placeholder: "Amount",
+                        controller: _amountInputController,
+                        keyboardType: TextInputType.number,
+                        onSubmitted: (_) => _submitData(),
+                      )
+                    : TextField(
+                        decoration: InputDecoration(labelText: "Amount"),
+                        controller: _amountInputController,
+                        keyboardType: TextInputType
+                            .number, //For IOS keyboard type use  =>   TextInputType.numberWithOptions(decimal: true)
+                        onSubmitted: (_) => _submitData(),
                       ),
-                    )
-                  ],
+                Container(
+                  height: 80,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Platform.isIOS
+                            ? CupertinoTextField.borderless(
+                                enabled: false,
+                                placeholder: _selectedDate == null
+                                    ? "No Date Choosen"
+                                    : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",
+                                placeholderStyle: TextStyle(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ),
+                              )
+                            : Text(
+                                _selectedDate == null
+                                    ? "No Date Choosen"
+                                    : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",
+                                style: TextStyle(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ),
+                              ),
+                      ),
+                      AdaptiveTextButton(
+                        buttonText: "Choose Date",
+                        handler: _presentDatePicker,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: _submitData,
-                child: Text("Add Transaction"),
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
-                  onPrimary: Theme.of(context).colorScheme.onSecondary,
+                Platform.isIOS
+                    ? SizedBox(
+                        height: 20,
+                      )
+                    : Container(),
+                AdaptiveButon(
+                  buttonText: "Add Transaction",
+                  handler: _submitData,
                 ),
-              ),
-            ],
+                Platform.isIOS
+                    ? SizedBox(
+                        height: 20,
+                      )
+                    : Container(),
+              ],
+            ),
           ),
         ),
       ),

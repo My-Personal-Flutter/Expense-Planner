@@ -22,7 +22,7 @@ class TransactionList extends StatelessWidget {
                     ),
                     SizedBox(height: constraint.maxHeight * 0.1),
                     Container(
-                      height: constraint.maxHeight * 0.5,
+                      height: constraint.maxHeight * 0.6,
                       child: Image.asset(
                         "assets/images/waiting.png",
                         fit: BoxFit.cover,
@@ -67,13 +67,27 @@ class TransactionList extends StatelessWidget {
                       DateFormat.yMMMd().format(transactions[index].date),
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: Theme.of(context).errorColor,
-                      ),
-                      onPressed: () => deleteTx(transactions[index].id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 460
+                        ? TextButton.icon(
+                            onPressed: () => deleteTx(transactions[index].id),
+                            icon: Icon(
+                              Icons.delete,
+                              color: Theme.of(context).errorColor,
+                            ),
+                            label: Text(
+                              "Delete",
+                              style: TextStyle(
+                                color: Theme.of(context).errorColor,
+                              ),
+                            ),
+                          )
+                        : IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              color: Theme.of(context).errorColor,
+                            ),
+                            onPressed: () => deleteTx(transactions[index].id),
+                          ),
                   ),
                 );
               }),

@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ],
-  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //   [
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ],
+  // );
   runApp(MyApp());
 }
 
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
         errorColor: Colors.red[700],
+        secondaryHeaderColor: Colors.black,
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.pink,
         ).copyWith(
@@ -160,8 +161,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
+  bool _showChart = false;
+
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final _islandscape = mediaQuery.orientation == Orientation.landscape;
     final _appBar = AppBar(
       title: Text('Personal Expenses'),
       centerTitle: false,
@@ -172,6 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+    final _txListWidget = Container(
+      height: (mediaQuery.size.height -
+              _appBar.preferredSize.height -
+              mediaQuery.padding.top) *
+          0.7,
+      child: TransactionList(
+        transactions: _userTransactions,
+        deleteTx: _deleteTransaction,
+      ),
+    );
     return Scaffold(
         appBar: _appBar,
         body: SingleChildScrollView(
@@ -179,25 +194,50 @@ class _MyHomePageState extends State<MyHomePage> {
             // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        _appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.3,
-                child: Chart(
-                  recentTransactions: _recentTransactions,
+              if (_islandscape)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Show Chart",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Switch(
+                      value: _showChart,
+                      onChanged: (val) {
+                        setState(() {
+                          _showChart = val;
+                        });
+                      },
+                      activeColor: Theme.of(context).secondaryHeaderColor,
+                    ),
+                  ],
                 ),
-              ),
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        _appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.7,
-                child: TransactionList(
-                  transactions: _userTransactions,
-                  deleteTx: _deleteTransaction,
+              if (!_islandscape)
+                Container(
+                  height: (mediaQuery.size.height -
+                          _appBar.preferredSize.height -
+                          mediaQuery.padding.top) *
+                      0.3,
+                  child: Chart(
+                    recentTransactions: _recentTransactions,
+                  ),
                 ),
-              )
+              if (!_islandscape) _txListWidget,
+              if (_islandscape)
+                _showChart
+                    ? Container(
+                        height: (mediaQuery.size.height -
+                                _appBar.preferredSize.height -
+                                mediaQuery.padding.top) *
+                            0.76,
+                        child: Chart(
+                          recentTransactions: _recentTransactions,
+                        ),
+                      )
+                    : _txListWidget
             ],
           ),
         ),

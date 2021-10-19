@@ -8,7 +8,7 @@ import 'dart:io';
 class NewTransaction extends StatefulWidget {
   final Function addTransactionFunction;
 
-  NewTransaction({this.addTransactionFunction});
+  const NewTransaction({this.addTransactionFunction});
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -91,7 +91,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         onSubmitted: (_) => _submitData(),
                       ),
                 Platform.isIOS
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 20,
                       )
                     : Container(),
@@ -141,7 +141,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                 ),
                 Platform.isIOS
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 20,
                       )
                     : Container(),
@@ -150,7 +150,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   handler: _submitData,
                 ),
                 Platform.isIOS
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 20,
                       )
                     : Container(),

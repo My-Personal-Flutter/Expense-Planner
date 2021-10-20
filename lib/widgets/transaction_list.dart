@@ -1,3 +1,4 @@
+import 'package:expense_planner/custom/my_listview.dart';
 import 'package:expense_planner/models/transaction.dart';
 import 'package:expense_planner/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
@@ -33,14 +34,26 @@ class TransactionList extends StatelessWidget {
                 );
               },
             )
-          : ListView.builder(
-              itemCount: transactions.length,
-              itemBuilder: (context, index) {
-                return TransactionItem(
-                  transaction: transactions[index],
-                  deleteTx: deleteTx,
-                );
-              }),
+          : MyListView(
+              transactions: transactions,
+              deleteTx: deleteTx,
+            ),
+      //
+      //
+      //  ListView.builder by default does not support child reordering.
+      //  If you are planning to change child order at a later time,
+      //  consider using ListView or ListView.custom.
+      //
+      //
+      // : ListView.builder(
+      //     itemCount: transactions.length,
+      //     itemBuilder: (context, index) {
+      //       return TransactionItem(
+      //         key: ValueKey(transactions[index].id),
+      //         transaction: transactions[index],
+      //         deleteTx: deleteTx,
+      //       );
+      //     }),
     );
   }
 }

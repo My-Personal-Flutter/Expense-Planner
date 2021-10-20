@@ -62,7 +62,25 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(state);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
   final List<Transaction> _userTransactions = [
     Transaction(
       id: "t1",
@@ -82,42 +100,42 @@ class _MyHomePageState extends State<MyHomePage> {
       amount: 12.12,
       date: DateTime.now(),
     ),
-    Transaction(
-      id: "t1",
-      title: "New Shoes",
-      amount: 30.12,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Glasses",
-      amount: 10.12,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t3",
-      title: "Shirts",
-      amount: 12.12,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t1",
-      title: "New Shoes",
-      amount: 30.12,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Glasses",
-      amount: 10.12,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t3",
-      title: "Shirts",
-      amount: 12.12,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: "t4",
+    //   title: "New Shoes",
+    //   amount: 30.12,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t5",
+    //   title: "Glasses",
+    //   amount: 10.12,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t6",
+    //   title: "Shirts",
+    //   amount: 12.12,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t7",
+    //   title: "New Shoes",
+    //   amount: 30.12,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t8",
+    //   title: "Glasses",
+    //   amount: 10.12,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t9",
+    //   title: "Shirts",
+    //   amount: 12.12,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _addNewTransaction(String title, double amount, DateTime selectedDate) {
@@ -144,8 +162,12 @@ class _MyHomePageState extends State<MyHomePage> {
       enableDrag: true,
       context: buildContext,
       builder: (_) {
-        return NewTransaction(
-          addTransactionFunction: _addNewTransaction,
+        return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: NewTransaction(
+            addTransactionFunction: _addNewTransaction,
+          ),
         );
       },
     );
@@ -290,8 +312,7 @@ class _MyHomePageState extends State<MyHomePage> {
         : Scaffold(
             appBar: _appBar,
             body: _body,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(

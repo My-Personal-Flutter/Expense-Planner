@@ -100,89 +100,93 @@ class _NewTransactionState extends State<NewTransaction> {
               left: 16,
               right: 16,
               top: 16,
-              bottom: MediaQuery.of(context).viewInsets.bottom + 36,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Platform.isIOS
-                    ? CupertinoTextField(
-                        placeholder: "Title",
-                        controller: _titleInputController,
-                        keyboardType: TextInputType.name,
-                        onSubmitted: (_) => _submitData(),
-                      )
-                    : TextField(
-                        decoration: InputDecoration(labelText: "Title"),
-                        controller: _titleInputController,
-                        keyboardType: TextInputType.name,
-                        onSubmitted: (_) => _submitData(),
-                      ),
-                Platform.isIOS
-                    ? const SizedBox(
-                        height: 20,
-                      )
-                    : Container(),
-                Platform.isIOS
-                    ? CupertinoTextField(
-                        placeholder: "Amount",
-                        controller: _amountInputController,
-                        keyboardType: TextInputType.number,
-                        onSubmitted: (_) => _submitData(),
-                      )
-                    : TextField(
-                        decoration: InputDecoration(labelText: "Amount"),
-                        controller: _amountInputController,
-                        keyboardType: TextInputType
-                            .number, //For IOS keyboard type use  =>   TextInputType.numberWithOptions(decimal: true)
-                        onSubmitted: (_) => _submitData(),
-                      ),
-                Container(
-                  height: 80,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Platform.isIOS
-                            ? CupertinoTextField.borderless(
-                                enabled: false,
-                                placeholder: _selectedDate == null
-                                    ? "No Date Choosen"
-                                    : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",
-                                placeholderStyle: TextStyle(
-                                  color: Theme.of(context).secondaryHeaderColor,
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Platform.isIOS
+                      ? CupertinoTextField(
+                          placeholder: "Title",
+                          controller: _titleInputController,
+                          keyboardType: TextInputType.name,
+                          onSubmitted: (_) => _submitData(),
+                        )
+                      : TextField(
+                          decoration: InputDecoration(labelText: "Title"),
+                          controller: _titleInputController,
+                          keyboardType: TextInputType.name,
+                          onSubmitted: (_) => _submitData(),
+                        ),
+                  Platform.isIOS
+                      ? const SizedBox(
+                          height: 20,
+                        )
+                      : Container(),
+                  Platform.isIOS
+                      ? CupertinoTextField(
+                          placeholder: "Amount",
+                          controller: _amountInputController,
+                          keyboardType: TextInputType.number,
+                          onSubmitted: (_) => _submitData(),
+                        )
+                      : TextField(
+                          decoration: InputDecoration(labelText: "Amount"),
+                          controller: _amountInputController,
+                          keyboardType: TextInputType
+                              .number, //For IOS keyboard type use  =>   TextInputType.numberWithOptions(decimal: true)
+                          onSubmitted: (_) => _submitData(),
+                        ),
+                  Container(
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Platform.isIOS
+                              ? CupertinoTextField.borderless(
+                                  enabled: false,
+                                  placeholder: _selectedDate == null
+                                      ? "No Date Choosen"
+                                      : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",
+                                  placeholderStyle: TextStyle(
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                  ),
+                                )
+                              : Text(
+                                  _selectedDate == null
+                                      ? "No Date Choosen"
+                                      : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                  ),
                                 ),
-                              )
-                            : Text(
-                                _selectedDate == null
-                                    ? "No Date Choosen"
-                                    : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",
-                                style: TextStyle(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                ),
-                              ),
-                      ),
-                      AdaptiveTextButton(
-                        buttonText: "Choose Date",
-                        handler: _presentDatePicker,
-                      ),
-                    ],
+                        ),
+                        AdaptiveTextButton(
+                          buttonText: "Choose Date",
+                          handler: _presentDatePicker,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Platform.isIOS
-                    ? const SizedBox(
-                        height: 20,
-                      )
-                    : Container(),
-                AdaptiveButon(
-                  buttonText: "Add Transaction",
-                  handler: _submitData,
-                ),
-                Platform.isIOS
-                    ? const SizedBox(
-                        height: 20,
-                      )
-                    : Container(),
-              ],
+                  Platform.isIOS
+                      ? const SizedBox(
+                          height: 20,
+                        )
+                      : Container(),
+                  AdaptiveButon(
+                    buttonText: "Add Transaction",
+                    handler: _submitData,
+                  ),
+                  Platform.isIOS
+                      ? const SizedBox(
+                          height: 20,
+                        )
+                      : Container(),
+                ],
+              ),
             ),
           ),
         ),

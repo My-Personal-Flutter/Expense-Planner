@@ -161,6 +161,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     showModalBottomSheet(
       enableDrag: true,
       context: buildContext,
+      isScrollControlled: true,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
